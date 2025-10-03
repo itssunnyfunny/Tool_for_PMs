@@ -5,7 +5,10 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@repo/db": ["../../packages/db/src"],
+    }
   },
   "include": [
     "**/*.ts",
