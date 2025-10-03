@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
       temperature: 0.2,
       max_tokens: 200,
     });
-
+   // @ts-ignore
     const text = response.choices[0].message.content ?? "[]";
     res.json({ subtasks: text });
   } catch (err: any) {

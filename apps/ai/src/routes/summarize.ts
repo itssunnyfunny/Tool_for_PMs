@@ -16,7 +16,7 @@ router.post("/", async (req, res) => {
       temperature: 0.3,
       max_tokens: 150,
     });
-
+  // @ts-ignore
     res.json({ summary: response.choices[0].message.content });
   } catch (err: any) {
     res.status(500).json({ error: err.message });
