@@ -2,7 +2,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/db";
 import { verifyToken } from "../../../lib/auth";
-import { TaskSchema } from "@/lib/validators/task";
+import { TaskSchema } from "../../../lib/validators/task";
 
 export async function GET(req: Request) {
   const url = new URL(req.url);
