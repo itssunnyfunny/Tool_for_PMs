@@ -1,5 +1,5 @@
 {
-  "name": "PMs_tool",
+  "name": "pm_tool",
   "private": true,
   "scripts": {
     "build": "turbo run build",
