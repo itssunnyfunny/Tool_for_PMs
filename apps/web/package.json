@@ -11,12 +11,15 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/ui": "*",
-    "@repo/design-system": "*",
     "@repo/db": "*",
+    "@repo/design-system": "*",
+    "@repo/ui": "*",
+    "@types/jsonwebtoken": "^9.0.10",
+    "jsonwebtoken": "^9.0.2",
     "next": "^15.5.0",
     "react": "^19.1.0",
-    "react-dom": "^19.1.0"
+    "react-dom": "^19.1.0",
+    "zod": "^4.1.11"
   },
   "devDependencies": {
     "@repo/eslint-config": "*",
