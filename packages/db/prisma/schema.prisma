@@ -13,3 +13,98 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+// ---------------------------------------
+// 👤 User Model
+// ---------------------------------------
+model User {
+  id          String       @id @default(cuid())
+  name        String
+  email       String       @unique
+  password    String
+  role        Role         @default(USER)
+  projects    Project[]    @relation("UserProjects")
+  assigned    Task[]       @relation("AssignedTasks")
+  notifications Notification[]
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+}
+
+enum Role {
+  USER
+  ADMIN
+  MANAGER
+}
+
+model Project {
+  id           String         @id @default(cuid())
+  name         String
+  description  String?
+  ownerId      String
+  owner        User           @relation("UserProjects", fields: [ownerId], references: [id])
+  tasks        Task[]
+  aiSuggestions AISuggestion[]
+  createdAt    DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+}
+
+model Task {
+  id           String       @id @default(cuid())
+  title        String
+  description  String?
+  status       TaskStatus   @default(PENDING)
+  priority     Priority     @default(MEDIUM)
+  projectId    String
+  project      Project      @relation(fields: [projectId], references: [id])
+  assignedToId String?
+  assignedTo   User?        @relation("AssignedTasks", fields: [assignedToId], references: [id])
+  subtasks     Subtask[]
+  dueDate      DateTime?
+  createdAt    DateTime     @default(now())
+  updatedAt    DateTime     @updatedAt
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  BLOCKED
+}
+
+enum Priority {
+  LOW
+  MEDIUM
+  HIGH
+  CRITICAL
+}
+
+
+model Subtask {
+  id          String     @id @default(cuid())
+  title       String
+  status      TaskStatus @default(PENDING)
+  taskId      String
+  task        Task       @relation(fields: [taskId], references: [id])
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+}
+
+model AISuggestion {
+  id          String     @id @default(cuid())
+  projectId   String
+  project     Project    @relation(fields: [projectId], references: [id])
+  content     String     // raw text from Cerebras or processed JSON
+  createdAt   DateTime   @default(now())
+}
+
+
+model Notification {
+  id          String     @id @default(cuid())
+  userId      String
+  user        User       @relation(fields: [userId], references: [id])
+  title       String
+  message     String
+  read        Boolean    @default(false)
+  createdAt   DateTime   @default(now())
+}
+
