@@ -1,7 +1,7 @@
 // apps/web/app/api/auth/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@repo/db";
-import { signToken } from "@/lib/auth";
+import { signToken } from "../../../lib/auth";
 
 export async function POST(req: Request) {
   const { email, password } = await req.json();
